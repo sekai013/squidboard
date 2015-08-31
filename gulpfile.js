@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
 var browserSync = require('browser-sync');
 
-const BROWSER_SYNC_RELOAD_DELAY = 500;
+const BROWSER_SYNC_RELOAD_DELAY = 1000;
 
 gulp.task('nodemon', function(callback) {
 	var started = false;

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title><%= title %></title>
+		<link rel="stylesheet" href="/stylesheets/lib/bootstrap-3.3.5.min.css" />
+		<link rel="stylesheet" href="/stylesheets/font.css" />
+		<link rel="stylesheet" href="/stylesheets/board.css" />
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="container">
+					<div class="nav navbar-header">
+						<a href="/" class="navbar-brand ikamodoki"><%= title %></a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<div id="chat-container" class="col-md-6">
+					<div id="messages"></div>
+					<form action="" class="form-horizontal">
+						<div class="form-group">
+							<div class="col-sm-10">
+								<input type="text" id="message" class="form-control" autocomplete="off" />
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-default">Send</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div id="stage-container" class="col-md-6">
+					<form action="" id="stage-select" class="form-inline">
+						<label for="stage" class="ikamodoki">ステージ</label>
+						<select id="stage-selector" class="form-control">
+							<% for (var i = 0; i < stages.length; i++) { %>
+							<option value="<%= stages[i].value %>"><%= stages[i].name %></option>
+							<% } %>
+						</select>
+						<label for="mode-selector" class="ikamodoki">ルール</label>
+						<select id="mode-selector" class="form-control">
+							<% for (var i = 0; i < modes.length; i++) { %>
+							<option value="<%= modes[i].value %>"><%= modes[i].name %></option>
+							<% } %>
+						</select>
+					</form>
+					<form action="" id="line-style" class="form-inline">
+						<div class="form-group">
+							<label for="line-color" class="ikamodoki">いろ</label>
+							<select id="line-color" class="form-control">
+								<% for (var i = 0; i < colors.length; i++) { %>
+								<option value="<%= colors[i] %>" style="color: <%= colors[i] %>;">■</option>
+								<% } %>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="line-width" class="ikamodoki">はば</label>
+							<select id="line-width" class="form-control">
+								<% for (var i = 0; i < widths.length; i++) { %>
+								<option value="<%= widths[i].value %>"><%= widths[i].name %></option>
+								<% } %>
+							</select>
+						</div>
+						<button id="undo" class="btn btn-default">もどる</button>
+						<button id="redo" class="btn btn-default">すすむ</button>
+						<button id="clear" class="btn btn-default">クリア</button>
+					</form>
+					<canvas id="canvas" width="600" height="1000"></canvas>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
