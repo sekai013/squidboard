@@ -1,0 +1,8 @@
+@font-face {
+	font-family: 'Ikamodoki';
+	src: url('./font/ikamodoki1_0.ttf') format('truetype');
+}
+
+.ikamodoki {
+	font-family: 'Ikamodoki';<`2`>
+}
