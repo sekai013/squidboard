@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var BoardSchema = new mongoose.Schema({
-	messages: { type: [String], default: [] },
+	posts: { type: [{ name: String, message: String }], default: [] },
 	canvas: {
 		cache: { type: [String], default: [] },
 		cacheLevel: {

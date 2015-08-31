@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Board = require('../mongodb-model');
-var BoardConfig = require('../board-config');
+var BoardConfig = require('../board-view-config');
 
 router.get('/:id', function(req, res, next) {
 	Board.findOne({ _id: req.params.id }, function(err, board) {

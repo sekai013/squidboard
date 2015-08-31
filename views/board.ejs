@@ -3,6 +3,11 @@
 	<head>
 		<meta charset = "utf-8">
 		<title><%= title %></title>
+		<script src="/javascripts/lib/jquery-2.1.3.min.js"></script>
+		<script src="/javascripts/lib/underscore-1.8.3.min.js"></script>
+		<script src="/javascripts/lib/socket.io-1.3.6.js"></script>
+		<script src="/javascripts/io-chat.js"></script>
+		<script src="/javascripts/canvas.js"></script>
 		<link rel="stylesheet" href="/stylesheets/lib/bootstrap-3.3.5.min.css" />
 		<link rel="stylesheet" href="/stylesheets/font.css" />
 		<link rel="stylesheet" href="/stylesheets/board.css" />
@@ -14,23 +19,66 @@
 					<div class="nav navbar-header">
 						<a href="/" class="navbar-brand ikamodoki"><%= title %></a>
 					</div>
+
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<p class="navbar-text ikamodoki">なまえ</p>
+							</li>
+							<li id="name-container">
+							</li>
+							<li id="name-form-container" style="display: none;">
+								<form id="name-form-navbar" class="navbar-form">
+									<div class="form-group">
+										<input type="text" id="name-navbar" class="form-control" />
+									</div>
+								</form>
+							</li>
+							<li>
+								<a href="" id="name-edit">
+									<span class="glyphicon glyphicon-cog"></span>
+								</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</nav>
 		<div class="container">
 			<div class="row">
 				<div id="chat-container" class="col-md-6">
-					<div id="messages"></div>
-					<form action="" class="form-horizontal">
+					<form action="" id="name-form" class="form-inline">
+						<div class="form-group">
+							<label for="name" class="ikamodoki">なまえ</label>
+							<input type="text" id="name" class="form-control" />
+							<button class="btn btn-default ikamodoki">さんかする!</button>
+						</div>
+					</form>
+					<form action="" id="message-form" class="form-horizontal">
 						<div class="form-group">
 							<div class="col-sm-10">
 								<input type="text" id="message" class="form-control" autocomplete="off" />
 							</div>
 							<div class="col-sm-2">
-								<button type="submit" class="btn btn-default">Send</button>
+								<button type="submit" class="btn btn-default">かきこみ</button>
 							</div>
 						</div>
 					</form>
+					<table class="table">
+						<tbody id="messages">
+							<% board.posts.reverse() %>
+							<% for (var i = 0; i < board.posts.length; i++) { %>
+							<tr>
+								<td><%= board.posts[i].name %></td>
+								<td><%= board.posts[i].message %></td>
+							</tr>
+							<% } %>
+						</tbody>
+					</table>
+					<!--
+					<div id="messages">
+					</div>
+					-->
 				</div>
 				<div id="stage-container" class="col-md-6">
 					<form action="" id="stage-select" class="form-inline">
