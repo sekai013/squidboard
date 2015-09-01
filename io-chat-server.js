@@ -19,6 +19,11 @@ io.on('connection', function(socket) {
 	var boardId = getBoardId(socket);
 
 	socket.join(boardId);
+	Board.findOne({ _id: boardId }, function(err, board) {
+		if (err) throw err;
+		if (!board) return;
+		socket.emit('cacheInit', board.canvas);
+	});
 
 	socket.on('post', function(post) {
 		Board.findOne({ _id: boardId }, function(err, board) {
@@ -28,6 +33,18 @@ io.on('connection', function(socket) {
 			board.save(function(err) {
 				if (err) throw err;
 				io.to(boardId).emit('newPost', post);
+			});
+		});
+	});
+
+	socket.on('cache', function(canvas) {
+		Board.findOne({ _id: boardId }, function(err, board) {
+			if (err) throw err;
+			board.canvas = canvas;
+			board.lastModified = Date.now();
+			board.save(function(err) {
+				if (err) throw err;
+				io.to(boardId).emit('cacheRenewed', canvas);
 			});
 		});
 	});

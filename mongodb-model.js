@@ -3,7 +3,14 @@ var mongoose = require('mongoose');
 var BoardSchema = new mongoose.Schema({
 	posts: { type: [{ name: String, message: String }], default: [] },
 	canvas: {
-		cache: { type: [String], default: [] },
+		cache: {
+			type: [{
+				url: String,
+				stage: String,
+				mode: String
+			}],
+			default: []
+		},
 		cacheLevel: {
 			type: Number,
 			set: function(n) { return Math.round(n); },
