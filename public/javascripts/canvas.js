@@ -102,18 +102,98 @@ $(function() {
 					 .on('mouseup', stopDrawing)
 					 .on('mouseleave', stopDrawing);
 
-	var lineColorSelector = $('#line-color');
-	var lineWidthSelector = $('#line-width');
+	/*** Drawing Line ***/
+
+	$('#line-style').on('submit', function(e) { return false; });
+
+	/***** Line Color *****/
+
+	var lineColorButton = $('#color-button');
 
 	var setLineColor = function() {
-		context.strokeStyle = lineColorSelector.val();
+		context.strokeStyle = lineColorButton.val();
 	};
+	var isColorPopupOpen = false;
+
+	var onClickColorBtn = (function() {
+
+		const PopupWidth = 200;
+		const PopupHeight = 350;
+		
+		return function(e) {
+
+			e.stopPropagation();
+			if (isColorPopupOpen) return;
+			isColorPopupOpen = true;
+			var popupContainer = $('#color-popup-container');
+			popupContainer.css({
+				'box-sizing': 'content-box',
+				width: PopupWidth,
+				height: PopupHeight,
+				position: 'absolute',
+				left: e.pageX,
+				top: e.pageY,
+				display: 'none'
+			}).animate({
+				height: 'toggle',
+				opacity: 'toggle'
+			});
+			$(document).on('keydown', onESCKeydownColor);
+			$(document).on('click', onClickNonColorPopup);
+			$('.color').on('click', onClickColorPopupBtn);
+
+		};
+
+	})();
+
+	var removeColorPopup = function() {
+		$(document).off('keydown', onESCKeydownColor);
+		$(document).off('click', onClickNonColorPopup);
+		$('.color').off('click', onClickColorPopupBtn);
+		$('#color-popup-container').animate({
+			height: 'toggle',
+			opacity: 'toggle',
+		}, function() {
+			lineColorButton.on('click', onClickColorBtn);
+		});
+	};
+
+	var onESCKeydownColor = function(e) {
+		if (isColorPopupOpen && e.keyCode === 27) {
+			isColorPopupOpen = false;
+			removeColorPopup();
+		}
+	};
+
+	var onClickNonColorPopup = function(e) {
+		if (isColorPopupOpen && !$.contains($('#color-popup-conteiner'), e.target)) {
+			isColorPopupOpen = false;
+			removeColorPopup();
+		}
+	};
+
+	var onClickColorPopupBtn = function(e) {
+		if (!isColorPopupOpen) return;
+		lineColorButton.css('background-color', e.target.id);
+		lineColorButton.val(e.target.id);
+		setLineColor();
+		isColorPopupOpen = false;
+		removeColorPopup();
+	};
+
+	lineColorButton.on('click', onClickColorBtn);
+
+	/***** Line Width *****/
+
+	var lineWidthSelector = $('#line-width');
+
 	var setLineWidth = function() {
 		context.lineWidth = lineWidthSelector.val();
 	};
 
-	lineColorSelector.on('change', setLineColor);
 	lineWidthSelector.on('change', setLineWidth);
+
+	/*** Canvas Cache, Undo, Redo ***/
 
 	var loadCache = function() {
 		var img = new Image();

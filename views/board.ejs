@@ -11,6 +11,44 @@
 		<link rel="stylesheet" href="/stylesheets/lib/bootstrap-3.3.5.min.css" />
 		<link rel="stylesheet" href="/stylesheets/font.css" />
 		<link rel="stylesheet" href="/stylesheets/board.css" />
+		<style>
+.color {
+	width: 50px;
+	height: 50px;
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+
+.btn-color {
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+
+.red {
+	background-color: red;
+}
+.blue {
+	background-color: blue;
+}
+.yellow {
+	background-color: yellow;
+}
+.pink {
+	background-color: pink;
+}
+
+div.popup-container {
+	box-sizing: content-box;
+	z-index: 999;
+	position: 'absolute';
+	margin: 0;
+	padding: 0;
+}
+		</style>
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top">
@@ -97,11 +135,7 @@
 					<form action="" id="line-style" class="form-inline">
 						<div class="form-group">
 							<label for="line-color" class="ikamodoki">いろ</label>
-							<select id="line-color" class="form-control">
-								<% for (var i = 0; i < colors.length; i++) { %>
-								<option value="<%= colors[i] %>" style="color: <%= colors[i] %>;">■</option>
-								<% } %>
-							</select>
+							<button id="color-button" class="btn btn-color" value="<%= colors[0] %>" style="background-color: <%= colors[0] %>;"></button>
 						</div>
 						<div class="form-group">
 							<label for="line-width" class="ikamodoki">はば</label>
@@ -118,6 +152,11 @@
 					<canvas id="canvas" width="600" height="1000"></canvas>
 				</div>
 			</div>
+		</div>
+		<div id="color-popup-container" class="popup-container" style="display: none;">
+			<% for (var i = 0; i < colors.length; i++) { %>
+			<button id="<%= colors[i] %>" class="color" style="background-color: <%= colors[i] %>;"></button>
+			<% } %>
 		</div>
 	</body>
 </html>
