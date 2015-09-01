@@ -45,6 +45,8 @@
 			</div>
 		</nav>
 		<div class="container">
+			<div id="notification-container" class="alert alert-warning" role="alert" style="display: none;">
+			</div>
 			<div class="row">
 				<div id="chat-container" class="col-md-6">
 					<form action="" id="name-form" class="form-inline">
@@ -60,7 +62,7 @@
 								<input type="text" id="message" class="form-control" autocomplete="off" />
 							</div>
 							<div class="col-sm-2">
-								<button type="submit" class="btn btn-default">かきこみ</button>
+								<button type="submit" class="btn btn-default">かきこむ</button>
 							</div>
 						</div>
 					</form>
@@ -71,14 +73,11 @@
 							<tr>
 								<td><%= board.posts[i].name %></td>
 								<td><%= board.posts[i].message %></td>
+								<td><%= board.posts[i].time %></td>
 							</tr>
 							<% } %>
 						</tbody>
 					</table>
-					<!--
-					<div id="messages">
-					</div>
-					-->
 				</div>
 				<div id="stage-container" class="col-md-6">
 					<form action="" id="stage-select" class="form-inline">

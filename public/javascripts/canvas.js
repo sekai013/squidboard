@@ -54,6 +54,7 @@ $(function() {
 	var cacheLevel = -1;
 	var socket = io();
 
+	const CacheMaxLen = 15;
 	var emitCache = function() {
 		socket.emit('cache', {
 			cache: cache,
@@ -69,6 +70,10 @@ $(function() {
 			stage: stageSelector.val(),
 			mode: modeSelector.val()
 		});
+		if (cache.length > CacheMaxLen) {
+			cache = cache.slice(cache.length - CacheMaxLen);
+			cacheLevel = CacheMaxLen - 1;
+		}
 		if (cacheLevel > 0) emitCache();
 	};
 	var onMouseDown = function(e) {

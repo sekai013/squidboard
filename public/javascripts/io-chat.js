@@ -4,7 +4,7 @@ $(function() {
 	// constants
 
 	const NameMaxLen = 20;
-	const MessageMaxLen = 150;
+	const MessageMaxLen = 100;
 
 	// functions
 
@@ -14,7 +14,7 @@ $(function() {
 	};
 
 	var nameToParagraph = function(name) {
-		var tpl = '<p id="name-show-navbar" class="navbar-text"><%- name %></p>';
+		const tpl = '<p id="name-show-navbar" class="navbar-text"><%- name %></p>';
 		var compiledTpl = _.template(tpl);
 		return compiledTpl({ name: name });
 	};
@@ -25,9 +25,26 @@ $(function() {
 	};
 
 	var postToHtml = function(post) {
-		const tpl = '<tr><td><%- name %></td><td><%- message %></td></tr>';
+		const tpl = '<tr><td><%- name %></td><td><%- message %></td><td><%- time %></td></tr>';
 		var compiledTpl = _.template(tpl);
 		return compiledTpl(post);
+	};
+
+	var notify = function(about, position) {
+		const Notifications = {
+			name: '名前に利用できるのは1文字以上20文字以下です.',
+			message: '1度に投稿できるのは1文字以上100文字以下です.'
+		}
+		var notification = Notifications[about] || '';
+		position = position || 'left';
+		if (notification) {
+			$('#notification-container').html(notification)
+																	.removeClass('text-left', 'text-right')
+																	.addClass('text-' + position)
+																	.show();
+		} else {
+			$('#notification-container').hide();
+		}
 	};
 
 	// event handlers
@@ -36,10 +53,11 @@ $(function() {
 		e.preventDefault();
 		var name = $('#name').val();
 		if (!isValidString(name, NameMaxLen)) {
-			// error
+			notify('name');
 			return;
 		}
 
+		notify('clear');
 		localStorage.setItem('name', name);
 		appendNameToNavbar(name);
 		$('#name-form').hide();
@@ -52,10 +70,11 @@ $(function() {
 		if (!isValidString(name, NameMaxLen)) return;
 		var message = $('#message').val();
 		if (!isValidString(message, MessageMaxLen)) {
-			// error
+			notify('message');
 			return;
 		}
 
+		notify('clear');
 		socket.emit('post', {
 			name: name,
 			message: message
@@ -75,13 +94,15 @@ $(function() {
 				$('#name-form-container').show();
 			} else {
 				var newName = $('#name-navbar').val();
-				if (isValidString(newName, NameMaxLen)) {
-					localStorage.setItem('name', newName);
-					name = newName;
-				} else {
-					name = localStorage.getItem('name') || '';
-					// error
+				if (!isValidString(newName, NameMaxLen)) {
+					notify('name', 'right');
+					return;
 				}
+				notify('clear');
+				localStorage.setItem('name', newName);
+				name = newName;
+				$('#name-form').hide();
+				$('#message-form').show();
 				$('#name-form-container').hide();
 				appendNameToNavbar(name);
 			}
@@ -109,5 +130,4 @@ $(function() {
 	} else {
 		$('#message-form').hide();
 	}
-
 });
