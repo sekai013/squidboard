@@ -22,7 +22,7 @@ io.on('connection', function(socket) {
 	Board.findOne({ _id: boardId }, function(err, board) {
 		if (err) throw err;
 		if (!board) return;
-		socket.emit('cacheInit', board.canvas);
+		socket.emit('cacheInitialize', board.canvas);
 	});
 
 	const PostsMaxLen = 500;
@@ -67,7 +67,7 @@ io.on('connection', function(socket) {
 			board.lastModified = Date.now();
 			board.save(function(err) {
 				if (err) throw err;
-				socket.broadcast.to(boardId).emit('cacheRenewed', canvas);
+				socket.broadcast.to(boardId).emit('cacheUpdate', canvas);
 			});
 		});
 	});

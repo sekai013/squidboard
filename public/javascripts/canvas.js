@@ -74,7 +74,7 @@ $(function() {
 			cache = cache.slice(cache.length - CacheMaxLen);
 			cacheLevel = CacheMaxLen - 1;
 		}
-		if (cacheLevel > 0) emitCache();
+		emitCache();
 	};
 	var onMouseDown = function(e) {
 		startX = e.pageX - $(canvas).offset().left - BorderSize;
@@ -148,20 +148,23 @@ $(function() {
 		emitCache();
 	};
 
-	var onCacheRenewed = function(c) {
+	var onCacheInitialized = function(c) {
+		onCacheUpdated(c);
+		if (cacheLevel < 0) loadStage();
+	};
+	var onCacheUpdated = function(c) {
 		cache = c.cache;
 		cacheLevel = c.cacheLevel;
-		if (cacheLevel > -1) loadCache();
+		loadCache();
 	};
 
 	$('#undo').on('click', onClickUndo);
 	$('#redo').on('click', onClickRedo);
 	$('#clear').on('click', onClickClear);
 
-	socket.on('cacheInit', onCacheRenewed);
-	socket.on('cacheRenewed', onCacheRenewed);
+	socket.on('cacheInitialize', onCacheInitialized);
+	socket.on('cacheUpdate', onCacheUpdated);
 
-	loadStage();
 	setLineColor();
 	setLineWidth();
 });
