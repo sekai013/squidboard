@@ -194,8 +194,6 @@ $(function() {
 
 	lineWidthSelector.on('change', setLineWidth);
 
-	// cpy
-
 	var lineWidthButton = $('#width-button');
 
 	var setLineWidth = function() {
@@ -269,7 +267,6 @@ $(function() {
 	};
 
 	lineWidthButton.on('click', onClickWidthBtn);
-	// end of cpy
 
 	/*** Canvas Cache, Undo, Redo ***/
 
@@ -307,10 +304,13 @@ $(function() {
 	};
 
 	var onCacheInitialized = function(c) {
-		onCacheUpdated(c);
-		if (cacheLevel < 0) loadStage();
+		if (c.cacheLevel < 0) {
+			loadStage();
+		} else {
+			cacheUpdate(c);
+		}
 	};
-	var onCacheUpdated = function(c) {
+	var cacheUpdate = function(c) {
 		cache = c.cache;
 		cacheLevel = c.cacheLevel;
 		loadCache();
@@ -321,7 +321,7 @@ $(function() {
 	$('#clear').on('click', onClickClear);
 
 	socket.on('cacheInitialize', onCacheInitialized);
-	socket.on('cacheUpdate', onCacheUpdated);
+	socket.on('cacheUpdate', cacheUpdate);
 
 	setLineColor();
 	setLineWidth();
