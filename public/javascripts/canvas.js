@@ -190,8 +190,86 @@ $(function() {
 	var setLineWidth = function() {
 		context.lineWidth = lineWidthSelector.val();
 	};
+	var isWidthPopupOpen = false;
 
 	lineWidthSelector.on('change', setLineWidth);
+
+	// cpy
+
+	var lineWidthButton = $('#width-button');
+
+	var setLineWidth = function() {
+		context.lineWidth = lineWidthButton.val();
+	};
+
+	var onClickWidthBtn = (function() {
+
+		const PopupWidth = 150;
+		const PopupHeight = 50;
+		
+		return function(e) {
+
+			e.stopPropagation();
+			if (isWidthPopupOpen) return;
+			isWidthPopupOpen = true;
+			var popupContainer = $('#width-popup-container');
+			popupContainer.css({
+				'box-sizing': 'content-box',
+				width: PopupWidth,
+				height: PopupHeight,
+				position: 'absolute',
+				left: e.pageX,
+				top: e.pageY,
+				display: 'none'
+			}).animate({
+				height: 'toggle',
+				opacity: 'toggle'
+			});
+			$(document).on('keydown', onESCKeydownWidth);
+			$(document).on('click', onClickNonWidthPopup);
+			$('.width').on('click', onClickWidthPopupBtn);
+
+		};
+
+	})();
+
+	var removeWidthPopup = function() {
+		$(document).off('keydown', onESCKeydownWidth);
+		$(document).off('click', onClickNonWidthPopup);
+		$('.color').off('click', onClickWidthPopupBtn);
+		$('#width-popup-container').animate({
+			height: 'toggle',
+			opacity: 'toggle',
+		}, 'fast', function() {
+			lineWidthButton.on('click', onClickWidthBtn);
+		});
+	};
+
+	var onESCKeydownWidth = function(e) {
+		if (isWidthPopupOpen && e.keyCode === 27) {
+			isWidthPopupOpen = false;
+			removeWidthPopup();
+		}
+	};
+
+	var onClickNonWidthPopup = function(e) {
+		if (isWidthPopupOpen && !$.contains($('#width-popup-conteiner'), e.target)) {
+			isWidthPopupOpen = false;
+			removeWidthPopup();
+		}
+	};
+
+	var onClickWidthPopupBtn = function(e) {
+		if (!isWidthPopupOpen) return;
+		lineWidthButton.css('background-image', 'url(' + e.target.value + ')');
+		lineWidthButton.val(e.target.id);
+		setLineWidth();
+		isWidthPopupOpen = false;
+		removeWidthPopup();
+	};
+
+	lineWidthButton.on('click', onClickWidthBtn);
+	// end of cpy
 
 	/*** Canvas Cache, Undo, Redo ***/
 

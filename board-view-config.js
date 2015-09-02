@@ -62,13 +62,16 @@ const colors = [
 
 const widths = [ {
 		name: '細',
-		value: 1
+		value: 4,
+		src: '/images/linewidth/small.png'
 	}, {
 		name: '中',
-		value: 3
+		value: 6,
+		src: '/images/linewidth/mid.png'
 	}, {
 		name: '太',
-		value: 5
+		value: 8,
+		src: '/images/linewidth/large.png'
 	}
 ]
 

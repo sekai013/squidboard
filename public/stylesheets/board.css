@@ -7,3 +7,50 @@ tbody {
 	height: 1000px;
 	overflow-y: scroll;
 }
+
+.color {
+	width: 50px;
+	height: 50px;
+	padding: 0;
+	margin: 0;
+	float: left;
+	border-radius: 0;
+}
+
+.btn-color {
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+
+.width {
+	width: 50px;
+	height: 50px;
+	padding: 0;
+	margin: 0;
+	float: left;
+	background-color: #fff;
+	border: solid 1px;
+	border-radius: 0;
+}
+
+.btn-width {
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	margin: 0;
+	float: right;
+	background-color: #fff;
+	background-position: center;
+}
+
+.popup-container {
+	box-sizing: content-box;
+	z-index: 999;
+	position: 'absolute';
+	margin: 0;
+	padding: 0;
+	border: solid;
+}

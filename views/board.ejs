@@ -11,44 +11,6 @@
 		<link rel="stylesheet" href="/stylesheets/lib/bootstrap-3.3.5.min.css" />
 		<link rel="stylesheet" href="/stylesheets/font.css" />
 		<link rel="stylesheet" href="/stylesheets/board.css" />
-		<style>
-.color {
-	width: 50px;
-	height: 50px;
-	padding: 0;
-	margin: 0;
-	float: left;
-}
-
-.btn-color {
-	width: 34px;
-	height: 34px;
-	padding: 0;
-	margin: 0;
-	float: right;
-}
-
-.red {
-	background-color: red;
-}
-.blue {
-	background-color: blue;
-}
-.yellow {
-	background-color: yellow;
-}
-.pink {
-	background-color: pink;
-}
-
-div.popup-container {
-	box-sizing: content-box;
-	z-index: 999;
-	position: 'absolute';
-	margin: 0;
-	padding: 0;
-}
-		</style>
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top">
@@ -139,11 +101,8 @@ div.popup-container {
 						</div>
 						<div class="form-group">
 							<label for="line-width" class="ikamodoki">はば</label>
-							<select id="line-width" class="form-control">
-								<% for (var i = 0; i < widths.length; i++) { %>
-								<option value="<%= widths[i].value %>"><%= widths[i].name %></option>
-								<% } %>
-							</select>
+							<button id="width-button" class="btn btn-width" value="<%= widths[1].value %>" style="background-image: url(<%= widths[1].src %>);">
+							</button>
 						</div>
 						<button id="undo" class="btn btn-default">もどる</button>
 						<button id="redo" class="btn btn-default">すすむ</button>
@@ -155,7 +114,12 @@ div.popup-container {
 		</div>
 		<div id="color-popup-container" class="popup-container" style="display: none;">
 			<% for (var i = 0; i < colors.length; i++) { %>
-			<button id="<%= colors[i] %>" class="color" style="background-color: <%= colors[i] %>;"></button>
+			<button id="<%= colors[i] %>" class="btn color" style="background-color: <%= colors[i] %>;"></button>
+			<% } %>
+		</div>
+		<div id="width-popup-container" class="popup-container" style="display: none;">
+			<% for (var i = 0; i < widths.length; i++) { %>
+			<button id="<%= widths[i].value %>" class="btn width" value="<%= widths[i].src %>" style="background-image: url(<%= widths[i].src %>);"></button>
 			<% } %>
 		</div>
 	</body>
