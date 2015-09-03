@@ -62,7 +62,13 @@
 								<input type="text" id="message" class="form-control" autocomplete="off" />
 							</div>
 							<div class="col-sm-2">
-								<button type="submit" class="btn btn-default">かきこむ</button>
+								<button type="submit" class="btn btn-default"><span class="ikamodoki">かきこむ</span></button>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="autoscroll" class="ikamodoki">オートスクロール</label>
+								<input type="checkbox" id="autoscroll" checked />
 							</div>
 						</div>
 					</form>
@@ -80,35 +86,48 @@
 					</table>
 				</div>
 				<div id="stage-container" class="col-md-6">
-					<form action="" id="stage-select" class="form-inline">
-						<label for="stage" class="ikamodoki">ステージ</label>
-						<select id="stage-selector" class="form-control">
-							<% for (var i = 0; i < stages.length; i++) { %>
-							<option value="<%= stages[i].value %>"><%= stages[i].name %></option>
-							<% } %>
-						</select>
-						<label for="mode-selector" class="ikamodoki">ルール</label>
-						<select id="mode-selector" class="form-control">
-							<% for (var i = 0; i < modes.length; i++) { %>
-							<option value="<%= modes[i].value %>"><%= modes[i].name %></option>
-							<% } %>
-						</select>
-					</form>
-					<form action="" id="line-style" class="form-inline">
-						<div class="form-group">
-							<label for="line-color" class="ikamodoki">いろ</label>
-							<button id="color-button" class="btn btn-color" value="<%= colors[0] %>" style="background-color: <%= colors[0] %>;"></button>
+					<form action="" id="stage-form" class="form-horizontal">
+						<div class="form-group stage-group">
+							<label for="stage" class="ikamodoki col-sm-2 stage-label">ステージ</label>
+							<div class="col-sm-4 stage-selector">
+								<select id="stage-selector" class="form-control">
+									<% for (var i = 0; i < stages.length; i++) { %>
+									<option value="<%= stages[i].value %>"><%= stages[i].name %></option>
+									<% } %>
+								</select>
+							</div>
+							<label for="mode-selector" class="ikamodoki col-sm-2 stage-label">ルール</label>
+							<div class="col-sm-4 stage-selector">
+								<select id="mode-selector" class="form-control">
+									<% for (var i = 0; i < modes.length; i++) { %>
+									<option value="<%= modes[i].value %>"><%= modes[i].name %></option>
+									<% } %>
+								</select>
+							</div>
 						</div>
-						<div class="form-group">
-							<label for="line-width" class="ikamodoki">はば</label>
-							<button id="width-button" class="btn btn-width" value="<%= widths[1].value %>" style="background-image: url(<%= widths[1].src %>);">
-							</button>
+						<div class="form-group stage-group">
+							<div class="col-sm-2">
+								<label for="line-color" class="ikamodoki stage-label">いろ</label>
+								<button id="color-button" class="btn btn-color" value="<%= colors[0] %>" style="background-color: <%= colors[0] %>;"></button>
+							</div>
+							<div class="col-sm-2">
+								<label for="line-width" class="ikamodoki stage-label">はば</label>
+								<button id="width-button" class="btn btn-default btn-width" value="<%= widths[1].value %>" style="background-image: url(<%= widths[1].src %>);">
+							</div>
+							<div class="col-sm-5 col-sm-offset-3">
+								<button id="undo" class="btn btn-default">
+									<span class="ikamodoki">もどる</span>
+								</button>
+								<button id="redo" class="btn btn-default">
+									<span class="ikamodoki">すすむ</span>
+								</button>
+								<button id="clear" class="btn btn-default">
+									<span class="ikamodoki">クリア</span>
+								</button>
+							</div>
 						</div>
-						<button id="undo" class="btn btn-default">もどる</button>
-						<button id="redo" class="btn btn-default">すすむ</button>
-						<button id="clear" class="btn btn-default">クリア</button>
 					</form>
-					<canvas id="canvas" width="600" height="1000"></canvas>
+					<canvas id="canvas" width="600" height="1000" class="text-center"></canvas>
 				</div>
 			</div>
 		</div>
@@ -119,9 +138,8 @@
 		</div>
 		<div id="width-popup-container" class="popup-container" style="display: none;">
 			<% for (var i = 0; i < widths.length; i++) { %>
-			<button id="<%= widths[i].value %>" class="btn width" value="<%= widths[i].src %>" style="background-image: url(<%= widths[i].src %>);"></button>
+			<button id="<%= widths[i].value %>" class="btn btn-default width" value="<%= widths[i].src %>" style="background-image: url(<%= widths[i].src %>);"></button>
 			<% } %>
 		</div>
 	</body>
 </html>
-

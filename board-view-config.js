@@ -75,6 +75,11 @@ const widths = [ {
 	}
 ]
 
+/* 素材がなかった.kanasii.
+const stamps = [
+]
+*/
+
 exports.new = function() {
 	return {
 		title: title,

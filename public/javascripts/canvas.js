@@ -39,7 +39,7 @@ $(function() {
 			context.clearRect(0, 0, canvas.width, canvas.height);
 			context.drawImage(img,
 												0, 0, stage.size.width, stage.size.height,
-												(canvas.width-stage.size.width/2)/2, 20, stage.size.width/2, stage.size.height/2);
+												(canvas.width-stage.size.width/2.0)/2.0, 20, stage.size.width/2.0, stage.size.height/2.0);
 			cacheCanvas();
 		};
 	};
@@ -47,44 +47,37 @@ $(function() {
 	$(stageSelector).on('change', loadStage);
 	$(modeSelector).on('change', loadStage);
 
-	const BorderSize = 3;
+	/*** Drawing Line ***/
+
+	const BorderSize = 0;
 	var startX, startY, endX, endY;
 	var isDrawing = false;
 	var cache = [];
 	var cacheLevel = -1;
 	var socket = io();
 
-	const CacheMaxLen = 15;
-	var emitCache = function() {
-		socket.emit('cache', {
-			cache: cache,
-			cacheLevel: cacheLevel
-		});
-	};
-	var cacheCanvas = function() {
-		if (++cacheLevel < cache.length) {
-			cache.length = cacheLevel;
-		}
-		cache.push({
-			url: canvas.toDataURL(),
-			stage: stageSelector.val(),
-			mode: modeSelector.val()
-		});
-		if (cache.length > CacheMaxLen) {
-			cache = cache.slice(cache.length - CacheMaxLen);
-			cacheLevel = CacheMaxLen - 1;
-		}
-		emitCache();
-	};
 	var onMouseDown = function(e) {
-		startX = e.pageX - $(canvas).offset().left - BorderSize;
-		startY = e.pageY - $(canvas).offset().top - BorderSize;
+		if (e.pageX && e.pageY) {
+			startX = e.pageX - $(canvas).offset().left - BorderSize;
+			startY = e.pageY - $(canvas).offset().top - BorderSize;
+		} else {
+			e.preventDefault();
+			var touch = e.originalEvent.touches[0];
+			startX = touch.clientX + document.body.scrollLeft - $(canvas).offset().left - BorderSize;
+			startY = touch.clientY + document.body.scrollTop - $(canvas).offset().top - BorderSize;
+		}
 		isDrawing = true;
 	};
 	var onMouseMove = function(e) {
 		if (!isDrawing) return;
-		endX = e.pageX - $(canvas).offset().left - BorderSize;
-		endY = e.pageY - $(canvas).offset().top - BorderSize;
+		if (e.pageX && e.pageY) {
+			endX = e.pageX - $(canvas).offset().left - BorderSize;
+			endY = e.pageY - $(canvas).offset().top - BorderSize;
+		} else {
+			var touch = e.originalEvent.touches[0];
+			endX = touch.clientX + document.body.scrollLeft - $(canvas).offset().left - BorderSize;
+			endY = touch.clientY + document.body.scrollTop - $(canvas).offset().top - BorderSize;
+		}
 		context.beginPath();
 		context.moveTo(startX, startY);
 		context.lineTo(endX, endY);
@@ -101,10 +94,13 @@ $(function() {
 					 .on('mousemove', onMouseMove)
 					 .on('mouseup', stopDrawing)
 					 .on('mouseleave', stopDrawing);
+	$(canvas).on('touchstart', onMouseDown)
+					 .on('touchmove', onMouseMove)
+					 .on('touchend', stopDrawing);
 
-	/*** Drawing Line ***/
+	/*** Drawing Line Style ***/
 
-	$('#line-style').on('submit', function(e) { return false; });
+	$('#stage-form').on('submit', function(e) { return false; });
 
 	/***** Line Color *****/
 
@@ -270,6 +266,28 @@ $(function() {
 
 	/*** Canvas Cache, Undo, Redo ***/
 
+	const CacheMaxLen = 15;
+	var emitCache = function() {
+		socket.emit('cache', {
+			cache: cache,
+			cacheLevel: cacheLevel
+		});
+	};
+	var cacheCanvas = function() {
+		if (++cacheLevel < cache.length) {
+			cache.length = cacheLevel;
+		}
+		cache.push({
+			url: canvas.toDataURL(),
+			stage: stageSelector.val(),
+			mode: modeSelector.val()
+		});
+		if (cache.length > CacheMaxLen) {
+			cache = cache.slice(cache.length - CacheMaxLen);
+			cacheLevel = CacheMaxLen - 1;
+		}
+		emitCache();
+	};
 	var loadCache = function() {
 		var img = new Image();
 		var c = cache[cacheLevel];

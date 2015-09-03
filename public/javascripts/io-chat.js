@@ -111,8 +111,12 @@ $(function() {
 	})();
 
 	var onNewPost = function(post) {
+		var autoscroll = $('#autoscroll').prop('checked');
 		var elem = postToHtml(post);
 		$(elem).prependTo($('#messages'));
+		if (autoscroll) {
+			$('#messages').scrollTop(0);
+		}
 	};
 
 	// processes

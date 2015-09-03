@@ -4,7 +4,7 @@ body {
 
 tbody {
 	display: block;
-	height: 1000px;
+	max-height: 1000px;
 	overflow-y: scroll;
 }
 
@@ -18,8 +18,8 @@ tbody {
 }
 
 .btn-color {
-	width: 34px;
-	height: 34px;
+	width: 37px;
+	height: 37px;
 	padding: 0;
 	margin: 0;
 	float: right;
@@ -31,18 +31,16 @@ tbody {
 	padding: 0;
 	margin: 0;
 	float: left;
-	background-color: #fff;
 	border: solid 1px;
 	border-radius: 0;
 }
 
 .btn-width {
-	width: 34px;
-	height: 34px;
+	width: 37px;
+	height: 37px;
 	padding: 0;
 	margin: 0;
 	float: right;
-	background-color: #fff;
 	background-position: center;
 }
 
@@ -53,4 +51,20 @@ tbody {
 	margin: 0;
 	padding: 0;
 	border: solid;
+}
+
+.stage-label {
+	padding-top: 8.5px;
+	padding-bottom: 8.5px;
+}
+
+.stage-selector {
+	padding-top: 1.5px;
+	padding-bottom: 1.5px;
+	position: relative;
+	left: -40px;
+}
+
+.stage-group {
+	margin: 0;
 }
