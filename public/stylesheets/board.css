@@ -61,8 +61,6 @@ tbody {
 .stage-selector {
 	padding-top: 1.5px;
 	padding-bottom: 1.5px;
-	position: relative;
-	left: -40px;
 }
 
 .stage-group {
