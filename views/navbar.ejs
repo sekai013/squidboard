@@ -1,0 +1,40 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="container">
+			<div class="nav navbar-header">
+				<a href="/" class="navbar-brand ikamodoki"><%= title %></a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="http://twitter.com/share?text=<%= encodeURI(title) %>" id="tweet">
+							<span class="ikamodoki">つぶやく</span>
+						</a>
+					</li>
+				</ul>
+				<% if (typeof name !== 'undefined' && name) { %>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<p class="navbar-text ikamodoki">なまえ</p>
+					</li>
+					<li id="name-container">
+					</li>
+					<li id="name-form-container" style="display: none;">
+						<form id="name-form-navbar" class="navbar-form">
+							<div class="form-group">
+								<input type="text" id="name-navbar" class="form-control" />
+							</div>
+						</form>
+					</li>
+					<li>
+						<a href="" id="name-edit">
+							<span class="glyphicon glyphicon-cog"></span>
+						</a>
+					</li>
+				</ul>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</nav>

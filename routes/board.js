@@ -10,6 +10,7 @@ router.get('/:id', function(req, res, next) {
 		if (!board) next();
 		var config = BoardConfig.new();
 		config.board = board;
+		config.name = true;
 		res.render('board', config);
 	});
 });

@@ -2,19 +2,15 @@
 <html>
   <head>
     <title><%= title %></title>
+		<script src="/javascripts/navbar.js"></script>
     <link rel="stylesheet" href="/stylesheets/lib/bootstrap-3.3.5.min.css" />
 		<link rel="stylesheet" href="/stylesheets/font.css" />
+		<link rel="stylesheet" href="/stylesheets/sticky-footer.css" />
   </head>
   <body>
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="container-fluid">
-				<div class="container">
-					<div class="nav navbar-header">
-						<a href="/" class="navbar-brand ikamodoki"><%= title %></a>
-					</div>
-				</div>
-			</div>
-		</nav>
+
+		<%- include navbar %>
+
 		<div class="jumbotron">
 			<div class="container text-center">
 				<h1 class="ikamodoki"><%= title %></h1>
@@ -34,5 +30,8 @@
 				</div>
 			</div>
 		</div>
+
+		<%- include footer %>
+
   </body>
 </html>

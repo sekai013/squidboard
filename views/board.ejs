@@ -6,44 +6,18 @@
 		<script src="/javascripts/lib/jquery-2.1.3.min.js"></script>
 		<script src="/javascripts/lib/underscore-1.8.3.min.js"></script>
 		<script src="/javascripts/lib/socket.io-1.3.6.js"></script>
+		<script src="/javascripts/navbar.js"></script>
 		<script src="/javascripts/io-chat.js"></script>
 		<script src="/javascripts/canvas.js"></script>
 		<link rel="stylesheet" href="/stylesheets/lib/bootstrap-3.3.5.min.css" />
 		<link rel="stylesheet" href="/stylesheets/font.css" />
 		<link rel="stylesheet" href="/stylesheets/board.css" />
+		<link rel="stylesheet" href="/stylesheets/sticky-footer.css" />
 	</head>
 	<body>
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="container-fluid">
-				<div class="container">
-					<div class="nav navbar-header">
-						<a href="/" class="navbar-brand ikamodoki"><%= title %></a>
-					</div>
 
-					<div class="collapse navbar-collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li>
-								<p class="navbar-text ikamodoki">なまえ</p>
-							</li>
-							<li id="name-container">
-							</li>
-							<li id="name-form-container" style="display: none;">
-								<form id="name-form-navbar" class="navbar-form">
-									<div class="form-group">
-										<input type="text" id="name-navbar" class="form-control" />
-									</div>
-								</form>
-							</li>
-							<li>
-								<a href="" id="name-edit">
-									<span class="glyphicon glyphicon-cog"></span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
+		<%- include navbar %>
+
 		<div class="container">
 			<div id="notification-container" class="alert alert-warning" role="alert" style="display: none;">
 			</div>
@@ -131,6 +105,9 @@
 				</div>
 			</div>
 		</div>
+
+		<%- include footer %>
+
 		<div id="color-popup-container" class="popup-container" style="display: none;">
 			<% for (var i = 0; i < colors.length; i++) { %>
 			<button id="<%= colors[i] %>" class="btn color" style="background-color: <%= colors[i] %>;"></button>
