@@ -1,6 +1,6 @@
 {
-  "name": "splatboard",
-  "version": "0.0.0",
+  "name": "SquidBoard",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -11,6 +11,7 @@
     "debug": "~2.1.1",
     "ejs": "~2.2.3",
     "express": "~4.11.1",
+    "log4js": "^0.6.26",
     "mongoose": "^4.1.3",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0",
