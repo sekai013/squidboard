@@ -6,8 +6,8 @@ var BoardConfig = require('../board-view-config');
 
 router.get('/:id', function(req, res, next) {
 	Board.findOne({ _id: req.params.id }, function(err, board) {
-		if (err) next(err);
-		if (!board) next();
+		if (err) return next();
+		if (!board) return next();
 		var config = BoardConfig.new();
 		config.board = board;
 		config.name = true;
@@ -18,9 +18,14 @@ router.get('/:id', function(req, res, next) {
 router.post('/create', function(req, res, next) {
 	var board = new Board();
 	board.save(function(err) {
-		if (err) next(err);
-		res.redirect('/board/' + board._id);
+		if (err) {
+			err = new Error('Internal Server Error');
+			err.status = 500;
+			return next(err);
+		}
+		res.redirect('/boards/' + board._id);
 	});
 });
+
 
 module.exports = router;
