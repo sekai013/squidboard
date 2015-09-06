@@ -78,14 +78,20 @@ $(function() {
 	var modeSelector = $('#mode-selector');
 
 	var loadStage = function() {
+		var calcMagnifcation = function(stage) {
+			return Math.min(canvas.width/stage.size.width,
+											canvas.height/stage.size.height,
+											1);
+		};
 		var stage = Stages[$(stageSelector).val()];
 		var img = new Image();
 		img.src = '/images/' + $(modeSelector).val() + '/' + $(stageSelector).val() + '.jpg';
 		img.onload = function() {
+			var mag = calcMagnifcation(stage);
 			context.clearRect(0, 0, canvas.width, canvas.height);
 			context.drawImage(img,
 												0, 0, stage.size.width, stage.size.height,
-												(canvas.width-stage.size.width/2.0)/2.0, 20, stage.size.width/2.0, stage.size.height/2.0);
+												(canvas.width-stage.size.width*mag)/2.0, 0, stage.size.width*mag, stage.size.height*mag);
 			cacheCanvas();
 		};
 	};
