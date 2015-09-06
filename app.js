@@ -13,13 +13,14 @@ var io = require('socket.io')(server);
 app.set('io', io);
 require('./io-chat-server');
 
+app.set('port', process.env.PORT || 3000);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-//app.use(logger('dev'));
 app.use(logger.connectLogger(logger.getLogger('system')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -65,6 +66,6 @@ app.use(function(err, req, res, next) {
     });
 });
 
-server.listen(3000, function() {
+server.listen(app.get('port'), function() {
 	console.log(new Date() + ': Server Running.');
 });

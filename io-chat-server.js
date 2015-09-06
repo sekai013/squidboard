@@ -41,7 +41,6 @@ io.on('connection', function(socket) {
 		socket.on('post', function(post) {
 			Board.findOne({ _id: boardId }, function(err, board) {
 				try {
-					console.log(err);
 					if (err) throw err;
 					if (!board) throw new Error('Not Found');
 					if (post.name > NameMaxLen || post.message > MessageMaxLen) {
