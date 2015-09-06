@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var dbUri = 'mongodb://heroku_mfjm6bzl:ckpds560rhme8k0tu88p02tnoa@ds035713.mongolab.com:35713/heroku_mfjm6bzl';
 
 var BoardSchema = new mongoose.Schema({
 	posts: { 
@@ -28,7 +29,7 @@ var BoardSchema = new mongoose.Schema({
 });
 var Board = mongoose.model('Board', BoardSchema);
 
-mongoose.connect('mongodb://localhost/board', function(err) {
+mongoose.connect(dbUri, function(err) {
 	if (err) throw err;
 	console.log('Connected to MongoDB Successfully.');
 });
