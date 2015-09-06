@@ -4,21 +4,67 @@ $(function() {
 			size: {
 				width: 800,
 				height: 1500
-			},
-			path: {
-				nawabari: '/images/nawabari/hakohugu.jpg',
-				area: '/images/area/hakohugu.jpg'
 			}
 		},
 		sionome: {
 			size: {
 				width: 800,
-				height: 1137,
-			},
-			path: {
-				nawabari: '/images/nawabari/sionome.jpg',
-				area: '/images/area/sionome.jpg'
+				height: 1137
 			}
+		},
+		blackbass: {
+			size: {
+				width: 600,
+				height: 1200
+			}
+		},
+		arowana: {
+			size: {
+				width: 675,
+				height: 1800
+			}
+		},
+		dekaline: {
+			size: {
+				width: 800,
+				height: 1600
+			}
+		},
+		hokke: {
+			size: {
+				width: 750,
+				height: 1900
+			}
+		},
+		mozuku: {
+			size: {
+				width: 800,
+				height: 800
+			}
+		},
+		negitoro: {
+			size: {
+				width: 700,
+				height: 1600
+			}
+		},
+		tachiuo: {
+			size: {
+				width: 800,
+				height: 1400
+			}
+		},
+		mongara: {
+			size: {
+				width: 800,
+				height: 1422
+			}
+		},
+		hirame: {
+			size: {
+				width: 800,
+				height: 1244
+			},
 		}
 	}
 
@@ -34,7 +80,7 @@ $(function() {
 	var loadStage = function() {
 		var stage = Stages[$(stageSelector).val()];
 		var img = new Image();
-		img.src = stage.path[$(modeSelector).val()];
+		img.src = '/images/' + $(modeSelector).val() + '/' + $(stageSelector).val() + '.jpg';
 		img.onload = function() {
 			context.clearRect(0, 0, canvas.width, canvas.height);
 			context.drawImage(img,
