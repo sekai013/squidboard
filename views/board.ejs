@@ -87,8 +87,15 @@
 							<div class="col-xs-2">
 								<label for="line-width" class="ikamodoki stage-label">はば</label>
 								<button id="width-button" class="btn btn-default btn-width" value="<%= widths[1].value %>" style="background-image: url(<%= widths[1].src %>);">
+								</button>
 							</div>
-							<div class="col-xs-5 col-xs-offset-3">
+							<div class="col-xs-3">
+								<label for="stamp" class="ikamodoki stage-label">スタンプ</label>
+								<input type="checkbox" id="stamp-checkbox" />
+								<button id="stamp-button" class="btn btn-default btn-stamp" value="<%= stamps[0].value %>" style="background-image: url(<%= stamps[0].src %>);">
+								</button>
+							</div>
+							<div class="col-xs-5">
 								<button id="undo" class="btn btn-default">
 									<span class="ikamodoki">もどる</span>
 								</button>
@@ -116,6 +123,11 @@
 		<div id="width-popup-container" class="popup-container" style="display: none;">
 			<% for (var i = 0; i < widths.length; i++) { %>
 			<button id="<%= widths[i].value %>" class="btn btn-default width" value="<%= widths[i].src %>" style="background-image: url(<%= widths[i].src %>);"></button>
+			<% } %>
+		</div>
+		<div id="stamp-popup-container" class="popup-container" style="display: none;">
+			<% for (var i = 0; i < stamps.length; i++) { %>
+			<button id="<%= stamps[i].value %>" class="btn btn-default stamp" value="<%= stamps[i].src %>" style="background-image: url(<%= stamps[i].src %>);"></button>
 			<% } %>
 		</div>
 	</body>
