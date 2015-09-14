@@ -48,6 +48,30 @@ canvas:hover {
 	background-position: center;
 }
 
+.stamp {
+	width: 50px;
+	height: 50px;
+	padding: 0;
+	margin: 0;
+	float: left;
+	border: solid 1px;
+	border-radius: 0;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.btn-stamp {
+	width: 37px;
+	height: 37px;
+	padding: 0;
+	margin: 0;
+	float: right;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
 .popup-container {
 	box-sizing: content-box;
 	z-index: 999;

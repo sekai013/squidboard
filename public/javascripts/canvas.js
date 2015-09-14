@@ -233,20 +233,12 @@ $(function() {
 
 	/***** Line Width *****/
 
-	var lineWidthSelector = $('#line-width');
-
-	var setLineWidth = function() {
-		context.lineWidth = lineWidthSelector.val();
-	};
-	var isWidthPopupOpen = false;
-
-	lineWidthSelector.on('change', setLineWidth);
-
 	var lineWidthButton = $('#width-button');
 
 	var setLineWidth = function() {
 		context.lineWidth = lineWidthButton.val();
 	};
+	var isWidthPopupOpen = false;
 
 	var onClickWidthBtn = (function() {
 
@@ -315,6 +307,124 @@ $(function() {
 	};
 
 	lineWidthButton.on('click', onClickWidthBtn);
+
+	/*** Stamp ***/
+
+	var stampButton = $('#stamp-button');
+	var isStampPopupOpen = false;
+
+	var onClickStampBtn = (function() {
+
+		const PopupWidth = 100;
+		const PopupHeight = 50;
+		
+		return function(e) {
+
+			e.stopPropagation();
+			if (isStampPopupOpen) return;
+			isStampPopupOpen = true;
+			var popupContainer = $('#stamp-popup-container');
+			popupContainer.css({
+				'box-sizing': 'content-box',
+				width: PopupWidth,
+				height: PopupHeight,
+				position: 'absolute',
+				left: e.pageX,
+				top: e.pageY,
+				display: 'none'
+			}).animate({
+				height: 'toggle',
+				opacity: 'toggle'
+			});
+			$(document).on('keydown', onESCKeydownStamp);
+			$(document).on('click', onClickNonStampPopup);
+			$('.stamp').on('click', onClickStampPopupBtn);
+
+		};
+
+	})();
+
+	var removeStampPopup = function() {
+		$(document).off('keydown', onESCKeydownStamp);
+		$(document).off('click', onClickNonStampPopup);
+		$('.color').off('click', onClickStampPopupBtn);
+		$('#stamp-popup-container').animate({
+			height: 'toggle',
+			opacity: 'toggle',
+		}, 'fast', function() {
+			stampButton.on('click', onClickStampBtn);
+		});
+	};
+
+	var onESCKeydownStamp = function(e) {
+		if (isStampPopupOpen && e.keyCode === 27) {
+			isStampPopupOpen = false;
+			removeStampPopup();
+		}
+	};
+
+	var onClickNonStampPopup = function(e) {
+		if (isStampPopupOpen && !$.contains($('#stamp-popup-conteiner'), e.target)) {
+			isStampPopupOpen = false;
+			removeStampPopup();
+		}
+	};
+
+	var onClickStampPopupBtn = function(e) {
+		if (!isStampPopupOpen) return;
+		stampButton.css('background-image', 'url(' + e.target.value + ')');
+		stampButton.val(e.target.id);
+		isStampPopupOpen = false;
+		removeStampPopup();
+	};
+
+	stampButton.on('click', onClickStampBtn);
+
+	const Stamps = {
+		'beacon-gamepad': {
+			size: {
+				width: 156,
+				height: 138
+			}
+		},
+		'beacon-real': {
+			size: {
+				width: 173,
+				height: 243
+			}
+		}
+	}
+
+	var stampCanvas = function(e) {
+		if (!$('#stamp-checkbox').prop('checked')) return;
+		var img = new Image();
+		img.src = '/images/stamp/png/' + stampButton.val() + '.png';
+		img.onload = function() {
+			var x, y;
+			var stamp = Stamps[stampButton.val()];
+			var mag = Math.min(37/stamp.size.width, 37/stamp.size.height);
+
+			if (e.pageX && e.pageY) {
+				x = e.pageX - $(canvas).offset().left - BorderSize;
+				y = e.pageY - $(canvas).offset().top - BorderSize;
+			} else {
+				e.preventDefault();
+				var touch = e.originalEvent.touches[0];
+				x = touch.clientX + document.body.scrollLeft - $(canvas).offset().left - BorderSize;
+				y = touch.clientY + document.body.scrollTop - $(canvas).offset().top - BorderSize;
+			}
+
+			context.drawImage(img,
+												x-stamp.size.width*mag/2,
+												y-stamp.size.height*mag/2,
+												stamp.size.width*mag,
+												stamp.size.height*mag);
+			cacheCanvas();
+		};
+	};
+
+	$(canvas).on('click', stampCanvas)
+					 .on('touchstart', stampCanvas);
 
 	/*** Canvas Cache, Undo, Redo ***/
 

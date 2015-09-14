@@ -35,6 +35,26 @@ app.use('/', routeIndex);
 app.use('/boards', routeBoard);
 app.use('/api/v' + api.version, api.router);
 
+// remove old data from database
+var Board = require('./mongodb-model');
+var hour = 1000 * 60 * 60;
+var removeInterval =  3 * hour;
+var removeTime = 24 * hour;
+
+var removeOldData = function() {
+	Board.find({ lastModified: {
+		$lt: Date.now() - removeTime
+	} }, function(err, boards) {
+		if (err) throw err;
+		boards.forEach(function(board) {
+			board.remove();
+		});
+	});
+};
+
+setInterval(removeOldData, removeInterval);
+removeOldData();
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

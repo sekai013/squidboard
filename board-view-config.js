@@ -75,10 +75,14 @@ const widths = [ {
 	}
 ]
 
-/* 素材がなかった.kanasii.
-const stamps = [
+const stamps = [ {
+		value: 'beacon-gamepad',
+		src: '/images/stamp/png/beacon-gamepad.png'
+	}, {
+		value: 'beacon-real',
+		src: '/images/stamp/png/beacon-real.png'
+	}
 ]
-*/
 
 exports.new = function() {
 	return {
@@ -86,7 +90,8 @@ exports.new = function() {
 		stages: stages,
 		modes: modes,
 		colors: colors,
-		widths: widths
+		widths: widths,
+		stamps: stamps
 	};
 };
 
