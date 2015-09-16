@@ -424,7 +424,7 @@ $(function() {
 		};
 	};
 
-	$(canvas).on('click', stampCanvas)
+	$(canvas).on('mousedown', stampCanvas)
 					 .on('touchstart', stampCanvas);
 
 	/*** Canvas Cache, Undo, Redo ***/
