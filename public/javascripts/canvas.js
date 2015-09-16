@@ -109,6 +109,7 @@ $(function() {
 	var socket = io();
 
 	var onMouseDown = function(e) {
+		if ($('#stamp-checkbox').prop('checked')) return;
 		if (e.pageX && e.pageY) {
 			startX = e.pageX - $(canvas).offset().left - BorderSize;
 			startY = e.pageY - $(canvas).offset().top - BorderSize;
@@ -167,7 +168,7 @@ $(function() {
 
 		const PopupWidth = 200;
 		const PopupHeight = 350;
-		
+
 		return function(e) {
 
 			e.stopPropagation();
@@ -244,7 +245,7 @@ $(function() {
 
 		const PopupWidth = 150;
 		const PopupHeight = 50;
-		
+
 		return function(e) {
 
 			e.stopPropagation();
@@ -317,7 +318,7 @@ $(function() {
 
 		const PopupWidth = 100;
 		const PopupHeight = 50;
-		
+
 		return function(e) {
 
 			e.stopPropagation();
@@ -423,7 +424,7 @@ $(function() {
 		};
 	};
 
-	$(canvas).on('click', stampCanvas)
+	$(canvas).on('mousedown', stampCanvas)
 					 .on('touchstart', stampCanvas);
 
 	/*** Canvas Cache, Undo, Redo ***/
